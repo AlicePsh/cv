@@ -1,0 +1,537 @@
+:root {
+  --text: #333333;
+  --text-muted: #909090;
+  --background: #ffffff;
+  --divider: #e6e5e3;
+  --placeholder: #f3f3f3;
+  --frame-width: 1280px;
+  --frame-height: 832px;
+  --bio-width: 360px;
+  --cases-width: 620px;
+  --column-gap: 100px;
+  --card-height: 313px;
+  --card-gap: 40px;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--text);
+  font-family: Inter, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 400;
+}
+
+body {
+  min-height: 100vh;
+  overflow-x: clip;
+}
+
+a {
+  color: inherit;
+}
+
+.scroll-root {
+  --steps: 5;
+  position: relative;
+  height: calc(100vh + var(--steps) * 85vh);
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.frame {
+  position: relative;
+  width: min(var(--frame-width), 100%);
+  height: min(var(--frame-height), 100%);
+  display: flex;
+  align-items: stretch;
+  gap: var(--column-gap);
+  padding: 20px 100px;
+  overflow: hidden;
+  background: var(--background);
+}
+
+.bio,
+.cases {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.bio {
+  width: var(--bio-width);
+  flex: none;
+  justify-content: space-between;
+  padding-bottom: min(240px, 30%);
+}
+
+.cases {
+  width: var(--cases-width);
+  flex: none;
+  position: relative;
+  justify-content: center;
+}
+
+.cases-title {
+  display: none;
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.bio-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.language {
+  display: flex;
+  align-items: center;
+  flex: none;
+}
+
+.lang {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 23px;
+  min-width: 31px;
+  padding: 4px 8px;
+  border: 1px solid transparent;
+  border-radius: 100px;
+  background: transparent;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.lang.is-current {
+  min-width: 34px;
+  border-color: var(--divider);
+  background: var(--background);
+  color: var(--text);
+}
+
+.bio-body {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  width: 100%;
+}
+
+.portrait {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+.bio-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.headings {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.role,
+h1,
+h2,
+p {
+  margin: 0;
+}
+
+.role {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+h1 {
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.facts {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.intro {
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: justify;
+}
+
+.contacts {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.contacts p {
+  white-space: nowrap;
+}
+
+.contacts a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.contacts a:hover,
+.contacts a:focus-visible {
+  text-decoration: underline;
+}
+
+.download-cv {
+  position: absolute;
+  top: 20px;
+  right: 100px;
+  z-index: 2;
+  color: var(--text);
+  font-size: 12px;
+  line-height: 1;
+  text-align: right;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.download-cv[aria-disabled="true"] {
+  cursor: default;
+}
+
+.slot {
+  position: relative;
+  width: var(--cases-width);
+  height: var(--card-height);
+  z-index: 1;
+}
+
+.card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: translate3d(0, var(--y, 0px), 0);
+  pointer-events: none;
+}
+
+.card-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  pointer-events: none;
+  transform-origin: center center;
+  transition: transform 0.8s var(--ease-out);
+  z-index: 0;
+}
+
+/* Scroll / depth shadow — driven by JS --shadow-rgb + --shadow-alpha. */
+.card-glow::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 20px -15px 120px rgba(var(--shadow-rgb), var(--shadow-alpha, 0));
+  opacity: 1;
+  transition: opacity 0.35s var(--ease-out);
+}
+
+/*
+  Colored hover glow lives on a SEPARATE layer.
+  It must not share the JS-driven box-shadow: transitioning that property
+  while --shadow-alpha updates keeps the visible glow stuck on dark gray.
+*/
+.card-glow::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 20px -15px 160px 28px var(--hover-glow, transparent);
+  opacity: 0;
+  transition: opacity 0.35s var(--ease-out);
+}
+
+.card[data-case="bms-scada-platform"] {
+  --hover-glow: rgba(17, 65, 133, 0.3);
+}
+
+.card[data-case="office-resource-booking"] {
+  --hover-glow: rgba(40, 40, 40, 0.3);
+}
+
+.card[data-case="design-system"] {
+  --hover-glow: rgba(102, 102, 102, 0.3);
+}
+
+.card[data-case="simple-model"] {
+  --hover-glow: rgba(108, 75, 183, 0.3);
+}
+
+.card[data-case="simple-solution"] {
+  --hover-glow: rgba(27, 101, 219, 0.3);
+}
+
+.card[data-case="behance"] {
+  --hover-glow: rgba(0, 89, 255, 0.3);
+}
+
+.card.is-active {
+  pointer-events: auto;
+}
+
+.card-face {
+  position: relative;
+  z-index: 1;
+  display: block;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 16px;
+  background: transparent;
+  color: inherit;
+  text-decoration: none;
+  transform-origin: center center;
+  opacity: var(--opacity, 1);
+  filter: blur(var(--blur, 0px));
+  transition: transform 0.8s var(--ease-out);
+}
+
+.card-face img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.card.is-active:hover .card-face,
+.card.is-active:focus-within .card-face,
+.card.is-active:hover .card-glow,
+.card.is-active:focus-within .card-glow {
+  transform: scale(calc(644 / 620), calc(325 / 313));
+}
+
+/* Colored glow only on real pointer hover — not the scroll shadow, not sticky touch. */
+@media (hover: hover) and (pointer: fine) {
+  .card.is-active:hover .card-glow::before {
+    opacity: 0;
+  }
+
+  .card.is-active:hover .card-glow::after {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 1200px) {
+  .download-cv {
+    right: 32px;
+  }
+
+  .frame {
+    gap: 40px;
+    padding-inline: 32px;
+    height: 100%;
+  }
+
+  .bio {
+    width: 320px;
+  }
+
+  .cases {
+    width: auto;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .slot {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 620 / 313;
+  }
+
+  .contacts,
+  .facts {
+    flex-wrap: wrap;
+  }
+
+  .contacts p,
+  .facts li {
+    white-space: normal;
+  }
+}
+
+@media (max-width: 800px) {
+  .scroll-root {
+    height: auto;
+  }
+
+  .sticky {
+    position: relative;
+    height: auto;
+  }
+
+  .frame {
+    flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+    gap: 0;
+    padding: 0 0 80px;
+    overflow: visible;
+  }
+
+  .bio,
+  .cases {
+    width: 100%;
+    height: auto;
+    padding-bottom: 0;
+  }
+
+  .bio-header {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 20px 28px 12px;
+    background: var(--background);
+  }
+
+  .download-cv {
+    position: static;
+    flex-basis: 100%;
+    align-self: flex-start;
+    text-align: left;
+  }
+
+  .bio-body {
+    width: auto;
+    margin: 100px 28px 0;
+  }
+
+  .cases {
+    padding: 80px 28px 0;
+  }
+
+  .cases-title {
+    display: block;
+    margin-bottom: 40px;
+  }
+
+  .facts,
+  .contacts {
+    flex-wrap: nowrap;
+    gap: 12px;
+  }
+
+  .slot {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+    width: 100%;
+    aspect-ratio: auto;
+    height: auto;
+  }
+
+  .card {
+    position: relative;
+    transform: none;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 337 / 170.131;
+    pointer-events: auto;
+  }
+
+  .card-glow::before {
+    box-shadow: 20px -15px 80px rgba(var(--shadow-rgb), 0.16);
+  }
+
+  .card-glow::after {
+    display: none;
+  }
+
+  .card-face {
+    opacity: 1;
+    filter: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-root {
+    height: auto;
+  }
+
+  .sticky {
+    position: relative;
+    height: auto;
+  }
+
+  .frame {
+    height: auto;
+    overflow: visible;
+  }
+
+  .card {
+    position: relative;
+    height: auto;
+    aspect-ratio: 620 / 313;
+    margin-bottom: 40px;
+    pointer-events: auto;
+  }
+
+  .slot {
+    height: auto;
+  }
+
+  .card-face {
+    opacity: 1;
+    filter: none;
+    transition: none;
+  }
+
+  .card.is-active:hover .card-face,
+  .card.is-active:focus-within .card-face {
+    transform: none;
+  }
+}
