@@ -7,6 +7,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="icon" href="../favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" href="../favicon.png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="../apple-touch-icon.png" />
     <link rel="stylesheet" href="../css/styles.css" />
     <link rel="stylesheet" href="../css/case.css" />
   </head>
@@ -37,15 +40,15 @@
 
         <header class="case-heading">
           <h1 data-en="Design System">Дизайн система</h1>
-          <p class="case-lead" data-en="Building a scalable design system based on design tokens for multiple products">Создание масштабируемой дизайн-системы на основе дизайн-токенов для нескольких продуктов</p>
+          <p class="case-lead" data-en="Building a scalable design system based on design tokens for multiple products">Создание масштабируемой дизайн-системы на основе дизайн-токенов для нескольких продуктов</p>
         </header>
 
         <div class="case-body">
           <section class="case-section">
             <h2 data-en="Introduction">Введение</h2>
             <div>
-              <p data-en="Over time, more and more products at the company started using the UI kit I'd created. As the number of products grew, we needed a more consistent approach to interface design and a simpler way to maintain it.">В компании, где я работаю, со временем стало появляться множество продуктов, в которых использовался мой базовый UI Kit. С увеличением количества продуктов встал вопрос стандартизации и упрощения работы над интерфейсами.</p>
-              <p data-en="At the same time, the frontend team was starting to build its own design system. We saw an opportunity to connect Figma and frontend code through an API, using design tokens to keep interface styles in sync. This was my first time working with design tokens, and I was curious to explore the approach. I read everything I could find, including articles on Habr and talks on the subject, to get up to speed. What started as work on design tokens gradually grew into a full design system with components, guidelines, and styles. I also organized the elements to make the system easier for the whole team to use.">Параллельно команда фронтенда начала переход к своей дизайн-системе, и возникла идея связать стили в интерфейсах с фигмой через API с использованием дизайн-токенов. Это был мой первый опыт работы с таким подходом, и он меня заинтересовал. Я изучила доступные материалы, включая статьи на Хабре и тематические лекции, чтобы погрузиться в тему. Работа над токенами постепенно превратилась в создание полноценной дизайн-системы, включающей компоненты, гайдлайны и стили. В процессе я систематизировала все элементы для удобства команды.</p>
+              <p data-en="Over time, more and more products at the company started using the UI kit I'd created. As the number of products grew, we needed a more consistent approach to interface design and a simpler way to maintain it.">В компании, где я работаю, со временем стало появляться множество продуктов, в которых использовался мой базовый UI Kit. С увеличением количества продуктов встал вопрос стандартизации и упрощения работы над интерфейсами.</p>
+              <p data-en="At the same time, the frontend team was starting to build its own design system. We saw an opportunity to connect Figma and frontend code through an API, using design tokens to keep interface styles in sync. This was my first time working with design tokens, and I was curious to explore the approach. I read everything I could find, including articles on Habr and talks on the subject, to get up to speed. What started as work on design tokens gradually grew into a full design system with components, guidelines, and styles. I also organized the elements to make the system easier for the whole team to use.">Параллельно команда фронтенда начала переход к своей дизайн-системе, и возникла идея связать стили в интерфейсах с фигмой через API с использованием дизайн-токенов. Это был мой первый опыт работы с таким подходом, и он меня заинтересовал. Я изучила доступные материалы, включая статьи на Хабре и тематические лекции, чтобы погрузиться в тему. Работа над токенами постепенно превратилась в создание полноценной дизайн-системы, включающей компоненты, гайдлайны и стили. В процессе я систематизировала все элементы для удобства команды.</p>
             </div>
             <figure>
               <img src="../img/cases/ds-02.png" alt="" />
@@ -55,14 +58,14 @@
 
           <section class="case-section">
             <h2 data-en="Process">Процесс</h2>
-            <h3 data-en="Building the design-token system">Создание системы дизайн-токенов</h3>
+            <h3 data-en="Building the design-token system">Создание системы дизайн-токенов</h3>
             <div>
-              <p data-en="I started by defining the smallest units of design: design tokens. These became the foundation for a flexible, scalable design system. I organized them into four libraries:">Я начала с определения минимальных единиц дизайна — дизайн-токенов. Они стали основой для построения гибкой и масштабируемой дизайн-системы. Для этого я выделила четыре библиотеки:</p>
+              <p data-en="I started by defining the smallest units of design: design tokens. These became the foundation for a flexible, scalable design system. I organized them into four libraries:">Я начала с определения минимальных единиц дизайна — дизайн-токенов. Они стали основой для построения гибкой и масштабируемой дизайн-системы. Для этого я выделила четыре библиотеки:</p>
               <p><strong data-en="Primitives — raw values:">Primitives — абсолютные значения:</strong></p>
               <ul>
-                <li data-en="Contains all the colors used across products and themes.">Включает все цвета, используемые во всех продуктах и темах.</li>
-                <li data-en="Uses neutral names for colors, such as(for example, blue, purple, gray).">Цвета названы нейтрально (например, blue, purple, gray).</li>
-                <li data-en="Has no modes (themes).">Без разделения на моды (темы).</li>
+                <li data-en="Contains all the colors used across products and themes.">Включает все цвета, используемые во всех продуктах и темах.</li>
+                <li data-en="Uses neutral names for colors, such as(for example, blue, purple, gray).">Цвета названы нейтрально (например, blue, purple, gray).</li>
+                <li data-en="Has no modes (themes).">Без разделения на моды (темы).</li>
               </ul>
             </div>
             <figure>
@@ -71,9 +74,9 @@
             <div>
               <p><strong data-en="Themes — semantic values:">Themes — тематические значения:</strong></p>
               <ul>
-                <li data-en="References values from the Primitives library.">Используют ссылки на библиотеку Primitives.</li>
-                <li data-en="Uses modes for different product themes, such as Product A's theme or Product B's dark theme.">Появляются моды (например, тема для продукта A, тёмная тема для продукта B).</li>
-                <li data-en="Assigns semantic meaning to colors, such as primary and secondary.">Цвета приобретают семантику (например, primary, secondary).</li>
+                <li data-en="References values from the Primitives library.">Используют ссылки на библиотеку Primitives.</li>
+                <li data-en="Uses modes for different product themes, such as Product A's theme or Product B's dark theme.">Появляются моды (например, тема для продукта A, тёмная тема для продукта B).</li>
+                <li data-en="Assigns semantic meaning to colors, such as primary and secondary.">Цвета приобретают семантику (например, primary, secondary).</li>
               </ul>
             </div>
             <figure>
@@ -82,22 +85,22 @@
             <div>
               <p><strong data-en="General — shared values:">General — стандартные значения:</strong></p>
               <ul>
-                <li data-en="References only the Themes library.">Ссылаются исключительно на библиотеку Themes.</li>
-                <li data-en="Contains standard colors for text, backgrounds, and other interface elements.">Включают стандартные цвета текста, фона и других элементов.</li>
-                <li data-en="Isn't tied to specific components and can be used when designing layouts.">Не привязаны к конкретным компонентам, но используются для проектирования макетов.</li>
+                <li data-en="References only the Themes library.">Ссылаются исключительно на библиотеку Themes.</li>
+                <li data-en="Contains standard colors for text, backgrounds, and other interface elements.">Включают стандартные цвета текста, фона и других элементов.</li>
+                <li data-en="Isn't tied to specific components and can be used when designing layouts.">Не привязаны к конкретным компонентам, но используются для проектирования макетов.</li>
               </ul>
             </div>
             <figure>
               <img src="../img/cases/ds-05.png" alt="" />
             </figure>
             <div>
-              <p><strong data-en="Components — component-specific values:">Components — значения для компонентов:</strong></p>
+              <p><strong data-en="Components — component-specific values:">Components — значения для компонентов:</strong></p>
               <ul>
-                <li data-en="Contains tokens for specific interface elements, such as button/primary/background.">Содержат токены, описывающие конкретные элементы интерфейса (например, button/primary/background).</li>
-                <li data-en="Uses separate tokens for different component states, such as hover and active.">Для каждого состояния компонента (hover, active) есть отдельные токены.</li>
-                <li data-en="Supports modes for more fine-grained design adjustments.">Поддерживают моды для нюансной настройки дизайна.</li>
+                <li data-en="Contains tokens for specific interface elements, such as button/primary/background.">Содержат токены, описывающие конкретные элементы интерфейса (например, button/primary/background).</li>
+                <li data-en="Uses separate tokens for different component states, such as hover and active.">Для каждого состояния компонента (hover, active) есть отдельные токены.</li>
+                <li data-en="Supports modes for more fine-grained design adjustments.">Поддерживают моды для нюансной настройки дизайна.</li>
               </ul>
-              <p data-en="This setup makes it easy to configure themes and update them in just a few clicks. Besides colors, the libraries also include numeric values for border radius, elevation, and spacing.">Такой подход позволяет гибко настраивать отображение тем и обновлять их буквально парой кликов. Помимо цветов, в библиотеки добавлены числовые значения для настройки border-radius, elevation и расстояний.</p>
+              <p data-en="This setup makes it easy to configure themes and update them in just a few clicks. Besides colors, the libraries also include numeric values for border radius, elevation, and spacing.">Такой подход позволяет гибко настраивать отображение тем и обновлять их буквально парой кликов. Помимо цветов, в библиотеки добавлены числовые значения для настройки border-radius, elevation и расстояний.</p>
             </div>
             <figure>
               <img src="../img/cases/ds-06.png" alt="" />
@@ -108,16 +111,16 @@
           </section>
 
           <section class="case-section">
-            <h3 data-en="Setting guidelines and organizing the system">Формализация правил и организация работы</h3>
+            <h3 data-en="Setting guidelines and organizing the system">Формализация правил и организация работы</h3>
             <div>
-              <p data-en="To make the system easier for the team to work with, I created a dedicated page with a set of guidelines:">Для упрощения работы команды я создала вкладку с гайдлайнами, где описала основные правила:</p>
+              <p data-en="To make the system easier for the team to work with, I created a dedicated page with a set of guidelines:">Для упрощения работы команды я создала вкладку с гайдлайнами, где описала основные правила:</p>
               <ul>
-                <li data-en="Every interface element should be a component.">Все элементы должны быть занесены в компоненты.</li>
-                <li data-en="Reusable elements shared across different modules belong in the design-system file.">Повторяющиеся элементы из разных модулей размещаются в файл дизайн-системы.</li>
-                <li data-en="Components are organized alphabetically. I decided not to use atomic design categories such as atoms and molecules.">Все компоненты систематизированы по алфавиту (от отделения на атомы и молекулы пришлось отказаться).</li>
-                <li data-en="Component styles are exported as a JSON file for frontend use.">Стили компонентов выгружаются в JSON-файл для использования на фронтенде.</li>
+                <li data-en="Every interface element should be a component.">Все элементы должны быть занесены в компоненты.</li>
+                <li data-en="Reusable elements shared across different modules belong in the design-system file.">Повторяющиеся элементы из разных модулей размещаются в файл дизайн-системы.</li>
+                <li data-en="Components are organized alphabetically. I decided not to use atomic design categories such as atoms and molecules.">Все компоненты систематизированы по алфавиту (от отделения на атомы и молекулы пришлось отказаться).</li>
+                <li data-en="Component styles are exported as a JSON file for frontend use.">Стили компонентов выгружаются в JSON-файл для использования на фронтенде.</li>
               </ul>
-              <p data-en="I also added examples to each component page showing how the components are used in the interface, along with their states and variations across themes.">На каждой странице с компонентами я добавила примеры их использования в интерфейсе, состояния и вариации в разных темах.</p>
+              <p data-en="I also added examples to each component page showing how the components are used in the interface, along with their states and variations across themes.">На каждой странице с компонентами я добавила примеры их использования в интерфейсе, состояния и вариации в разных темах.</p>
             </div>
             <figure>
               <img src="../img/cases/ds-08.png" alt="" />
@@ -131,13 +134,13 @@
           <section class="case-section">
             <h2 data-en="Results">Результат</h2>
             <div>
-              <p data-en="The design system I created:">Созданная мной дизайн-система:</p>
+              <p data-en="The design system I created:">Созданная мной дизайн-система:</p>
               <ul>
-                <li data-en="brought a consistent approach to interface design across the company's products that I designed and oversaw;">Стандартизировала работу над интерфейсами в продуктах компании, которые я создавала и курировала.</li>
-                <li data-en="made it easier to update product themes and styles, especially when several interfaces needed changes at once;">Упростила процесс внесения изменений в тему и стили продуктов, особенно при обновлении нескольких интерфейсов одновременно.</li>
-                <li data-en="made designs more consistent and easier to review, helping teams align and approve them faster.">Сделала макеты более последовательными и удобными, что увеличило скорость согласования дизайнов между командами.</li>
+                <li data-en="brought a consistent approach to interface design across the company's products that I designed and oversaw;">Стандартизировала работу над интерфейсами в продуктах компании, которые я создавала и курировала.</li>
+                <li data-en="made it easier to update product themes and styles, especially when several interfaces needed changes at once;">Упростила процесс внесения изменений в тему и стили продуктов, особенно при обновлении нескольких интерфейсов одновременно.</li>
+                <li data-en="made designs more consistent and easier to review, helping teams align and approve them faster.">Сделала макеты более последовательными и удобными, что увеличило скорость согласования дизайнов между командами.</li>
               </ul>
-              <p data-en="The system is still growing and becoming more detailed. It remains an important tool for both designers and frontend developers.">Система продолжает развиваться и детализироваться. Она остаётся важным инструментом как для дизайнеров, так и для фронтенд-разработчиков.</p>
+              <p data-en="The system is still growing and becoming more detailed. It remains an important tool for both designers and frontend developers.">Система продолжает развиваться и детализироваться. Она остаётся важным инструментом как для дизайнеров, так и для фронтенд-разработчиков.</p>
             </div>
           </section>
         </div>

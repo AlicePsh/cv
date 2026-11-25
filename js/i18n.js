@@ -25,6 +25,31 @@ function updateCvLink(lang) {
   cvLink.removeAttribute("aria-disabled");
 }
 
+function useMobileCardArt() {
+  return window.matchMedia("(max-width: 800px)").matches;
+}
+
+function cardImageSrc(img, lang) {
+  const en = lang === "en";
+  if (useMobileCardArt()) {
+    if (en && img.dataset.srcMobileEn) return img.dataset.srcMobileEn;
+    if (!en && img.dataset.srcMobileRu) return img.dataset.srcMobileRu;
+  }
+  return en ? img.dataset.srcEn : img.dataset.srcRu;
+}
+
+function refreshCardSources(lang = currentLang()) {
+  const next = lang === "en" ? "en" : "ru";
+  document.querySelectorAll("[data-src-en]").forEach((img) => {
+    const src = cardImageSrc(img, next);
+    if (src) img.src = src;
+    const alt = next === "en" ? img.dataset.altEn : img.dataset.altRu;
+    if (alt) img.alt = alt;
+  });
+}
+
+window.__portfolioRefreshCardSources = () => refreshCardSources(currentLang());
+
 function applyLanguage(lang) {
   const next = lang === "en" ? "en" : "ru";
   document.documentElement.lang = next;
@@ -36,11 +61,7 @@ function applyLanguage(lang) {
     el.hidden = value.trim() === "";
   });
 
-  document.querySelectorAll("[data-src-en]").forEach((img) => {
-    img.src = next === "en" ? img.dataset.srcEn : img.dataset.srcRu;
-    const alt = next === "en" ? img.dataset.altEn : img.dataset.altRu;
-    if (alt) img.alt = alt;
-  });
+  refreshCardSources(next);
 
   document.querySelectorAll("[data-lang-btn]").forEach((btn) => {
     const selected = btn.dataset.langBtn === next;

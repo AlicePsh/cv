@@ -85,6 +85,11 @@ a {
   justify-content: center;
 }
 
+/* Desktop: stack-slot wrappers are layout-transparent for the absolute card stack. */
+.stack-slot {
+  display: contents;
+}
+
 .cases-title {
   display: none;
   margin: 0;
@@ -139,6 +144,12 @@ a {
   color: var(--text);
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .lang:not(.is-current):hover {
+    background: var(--placeholder);
+  }
+}
+
 .bio-body {
   display: flex;
   flex-direction: column;
@@ -151,6 +162,7 @@ a {
   height: 100px;
   border-radius: 50%;
   object-fit: cover;
+  object-position: center;
   display: block;
 }
 
@@ -227,11 +239,12 @@ h1 {
 
 .download-cv {
   position: absolute;
-  top: 20px;
+  top: 24px;
   right: 100px;
   z-index: 2;
   color: var(--text);
-  font-size: 12px;
+  font-size: 13px;
+  font-weight: 500;
   line-height: 1;
   text-align: right;
   text-decoration: underline;
@@ -247,6 +260,11 @@ h1 {
   width: var(--cases-width);
   height: var(--card-height);
   z-index: 1;
+}
+
+/* Mobile-only end runway for the sticky card stack. */
+.stack-end-spacer {
+  display: none;
 }
 
 .card {
@@ -403,13 +421,27 @@ h1 {
 }
 
 @media (max-width: 800px) {
+  /* Avoid overflow-x: clip breaking position: sticky on iOS/WebKit. */
+  html,
+  body {
+    overflow-x: visible;
+  }
+
   .scroll-root {
     height: auto;
   }
 
   .sticky {
+    /*
+      Desktop uses this as a flex centering shell. On mobile it must NOT be a
+      flex container — flex + align/justify centering creates a sticky
+      containing-block quirk that lets the cases title drift while cards pin.
+    */
     position: relative;
     height: auto;
+    display: block;
+    align-items: stretch;
+    justify-content: flex-start;
   }
 
   .frame {
@@ -417,7 +449,8 @@ h1 {
     height: auto;
     min-height: 100vh;
     gap: 0;
-    padding: 0 0 80px;
+    padding: 0;
+    /* Sticky panels require no overflow clipping on ancestors. */
     overflow: visible;
   }
 
@@ -450,13 +483,9 @@ h1 {
     margin: 100px 28px 0;
   }
 
-  .cases {
-    padding: 80px 28px 0;
-  }
-
-  .cases-title {
-    display: block;
-    margin-bottom: 40px;
+  .bio {
+    /* Space before "Кейсы": was 40px, +50% → 60px. Mobile only. */
+    padding-bottom: 60px;
   }
 
   .facts,
@@ -465,22 +494,165 @@ h1 {
     gap: 12px;
   }
 
+  /*
+    Mobile sticky panel stack.
+    Only the project card (Figma art) sticks and overlaps — not a full-viewport
+    white sheet. .stack-slot is a transparent scroll runway sized by the card
+    plus padding-bottom; it is not sticky and has no background.
+
+    Sticky note: .cases must NOT use justify-content: center. Centering a flex
+    column collapses the sticky constraint box for children, so .cases-title
+    (and the cards) cannot pin to the viewport while the section scrolls.
+  */
+  .cases {
+    --title-sticky-top: 12svh;
+    --card-sticky-top: calc(var(--title-sticky-top) + 94px);
+    padding: 0;
+    justify-content: flex-start;
+  }
+
+  .cases-title {
+    /*
+      Measured natural gap under the heading text was padding-bottom: 16px
+      (title/card border boxes were flush). 3× that gap → 48px.
+
+      Sticky top comes from .cases --title-sticky-top (JS centers the
+      title + card composition in the viewport).
+    */
+    display: block;
+    position: sticky;
+    top: var(--title-sticky-top);
+    z-index: 20;
+    flex-shrink: 0;
+    align-self: stretch;
+    margin: 0;
+    padding: 20px 28px 48px;
+    background: var(--background);
+  }
+
   .slot {
+    /*
+      --slot-end-space is set from JS and applied to .stack-end-spacer so the
+      last card can settle under the sticky title at the same centered offset.
+    */
+    --slot-end-space: 30svh;
     display: flex;
     flex-direction: column;
-    gap: 60px;
+    gap: 24px;
     width: 100%;
-    aspect-ratio: auto;
     height: auto;
+    aspect-ratio: auto;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  .stack-end-spacer {
+    display: block;
+    flex: none;
+    width: 100%;
+    height: var(--slot-end-space);
+    pointer-events: none;
+  }
+
+  /*
+    Keep .stack-slot out of the box tree on mobile too (same as desktop).
+    Sticky + stacking order live on the content-sized .card only — nothing
+    else paints a full-width background or viewport-tall layer.
+  */
+  .stack-slot {
+    display: contents;
+  }
+
+  .card {
+    /*
+      Stick directly under the sticky title. Offset from .cases / JS so the
+      heading + card block stays centered as one composition.
+    */
+    --sticky-top: var(--card-sticky-top);
+    position: sticky;
+    top: var(--sticky-top);
+    /* --panel-index lives on .stack-slot; with display:contents it still inherits. */
+    z-index: calc(1 + var(--panel-index, 0));
+    width: 100%;
+    height: auto;
+    max-height: none;
+    aspect-ratio: auto;
+    transform: none;
+    pointer-events: auto;
+    display: block;
+    padding: 0 28px;
+    box-sizing: border-box;
+    background: transparent;
+  }
+
+  /* Ensure the topmost stuck card (and its link) receive taps. */
+  .card .card-face {
+    pointer-events: auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .card-glow {
+    display: none;
+  }
+
+  .card-face {
+    display: block;
+    width: 100%;
+    max-width: 337px;
+    height: auto;
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: 16px;
+    opacity: 1;
+    /*
+      Depth is applied on the face (not .card) so sticky positioning stays intact.
+      --stack-scale / --stack-brightness come from scroll overlap progress in JS.
+    */
+    transform: scale(var(--stack-scale, 1));
+    transform-origin: center center;
+    filter: brightness(var(--stack-brightness, 1));
+    will-change: transform, filter;
+    background: transparent;
+  }
+
+  .card-face img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    object-position: center top;
+    display: block;
+  }
+
+  .card.is-active:hover .card-face,
+  .card.is-active:focus-within .card-face,
+  .card.is-active:hover .card-glow,
+  .card.is-active:focus-within .card-glow {
+    transform: scale(var(--stack-scale, 1));
+  }
+}
+
+/* Mobile reduced-motion: normal sequential list, no sticky covering. */
+@media (max-width: 800px) and (prefers-reduced-motion: reduce) {
+  .slot {
+    gap: 60px;
   }
 
   .card {
     position: relative;
+    top: auto;
+    z-index: auto;
+    background: transparent;
+  }
+
+  .card-face {
     transform: none;
-    width: 100%;
-    height: auto;
-    aspect-ratio: 337 / 170.131;
-    pointer-events: auto;
+    filter: none;
+    will-change: auto;
+  }
+
+  .card-glow {
+    display: block;
   }
 
   .card-glow::before {
@@ -490,14 +662,9 @@ h1 {
   .card-glow::after {
     display: none;
   }
-
-  .card-face {
-    opacity: 1;
-    filter: none;
-  }
 }
 
-@media (prefers-reduced-motion: reduce) {
+@media (min-width: 801px) and (prefers-reduced-motion: reduce) {
   .scroll-root {
     height: auto;
   }
