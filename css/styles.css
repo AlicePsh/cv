@@ -60,7 +60,8 @@ a {
   align-items: stretch;
   gap: var(--column-gap);
   padding: 20px 100px;
-  overflow: hidden;
+  /* Visible so soft card shadows are not clipped at the frame edge. */
+  overflow: visible;
   background: var(--background);
 }
 
@@ -285,6 +286,13 @@ h1 {
   transform-origin: center center;
   transition: transform 0.8s var(--ease-out);
   z-index: 0;
+  /*
+    Soft separation shadow lives here (not on .card-face) so overflow:hidden
+    + filter on the face cannot clip it during stack / blur transitions.
+  */
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.06),
+    0 8px 24px rgba(0, 0, 0, 0.12);
 }
 
 /* Scroll / depth shadow — driven by JS --shadow-rgb + --shadow-alpha. */
@@ -486,6 +494,19 @@ h1 {
   .bio {
     /* Space before "Кейсы": was 40px, +50% → 60px. Mobile only. */
     padding-bottom: 60px;
+    text-align: left;
+  }
+
+  .bio .role,
+  .bio h1,
+  .bio p,
+  .bio .intro,
+  .bio .facts,
+  .bio .facts li,
+  .bio .contacts,
+  .bio .contacts p,
+  .bio .eyebrow {
+    text-align: left;
   }
 
   .facts,
@@ -567,6 +588,9 @@ h1 {
     /*
       Stick directly under the sticky title. Offset from .cases / JS so the
       heading + card block stays centered as one composition.
+
+      Grid stacks .card-glow under .card-face at the same art size so the soft
+      shadow follows the rounded card without using the full padded width.
     */
     --sticky-top: var(--card-sticky-top);
     position: sticky;
@@ -579,7 +603,8 @@ h1 {
     aspect-ratio: auto;
     transform: none;
     pointer-events: auto;
-    display: block;
+    display: grid;
+    justify-items: center;
     padding: 0 28px;
     box-sizing: border-box;
     background: transparent;
@@ -592,16 +617,40 @@ h1 {
     z-index: 1;
   }
 
+  /*
+    Soft shadow on .card-glow (sibling of the overflow:hidden face) so it is
+    not clipped. Sized to the face via shared grid cell + max-width.
+  */
   .card-glow {
+    display: block;
+    position: relative;
+    inset: auto;
+    grid-area: 1 / 1;
+    width: 100%;
+    max-width: 337px;
+    height: auto;
+    align-self: stretch;
+    border-radius: 16px;
+    transform: scale(var(--stack-scale, 1));
+    transform-origin: center center;
+    box-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.06),
+      0 8px 24px rgba(0, 0, 0, 0.12);
+    z-index: 0;
+  }
+
+  .card-glow::before,
+  .card-glow::after {
     display: none;
   }
 
   .card-face {
     display: block;
+    grid-area: 1 / 1;
     width: 100%;
     max-width: 337px;
     height: auto;
-    margin: 0 auto;
+    margin: 0;
     overflow: hidden;
     border-radius: 16px;
     opacity: 1;
@@ -653,9 +702,15 @@ h1 {
 
   .card-glow {
     display: block;
+    transform: none;
+    /* Soft separation stays on glow (same values as the sticky stack). */
+    box-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.06),
+      0 8px 24px rgba(0, 0, 0, 0.12);
   }
 
   .card-glow::before {
+    display: block;
     box-shadow: 20px -15px 80px rgba(var(--shadow-rgb), 0.16);
   }
 
